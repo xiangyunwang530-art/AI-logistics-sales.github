@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 時代物流行銷 vs 傳統行銷 | 典範轉移報告</title>
+    <title>EcoLogiTech - ESG 永續物流與智慧行銷系統</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500;700&display=swap');
 
         :root {
             --bg-color: #0d0214;
             --panel-bg: #1a0826;
+            --sidebar-bg: #09020e;
             --neon-magenta: #ff007f;
             --neon-cyan: #00f0ff;
             --neon-purple: #9d00ff;
+            --neon-green: #00ffaa;
             --text-main: #f0e6f5;
             --text-dim: #a692b3;
-            --grid-color: rgba(255, 0, 127, 0.05);
+            --grid-color: rgba(255, 0, 127, 0.06); /* 調高粉霓虹網格對比度 */
         }
 
-        /* 嚴格重設外邊距與內邊距，阻絕任何背景雜訊或溢出文字 */
+        /* 嚴格重設，確保網頁從最頂部開始貼合，絕不產生上下拉動的黑色空白 */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -32,93 +34,410 @@
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 25px 25px;
+            background-size: 30px 30px; /* 經典科幻網格尺寸 */
             display: flex;
-            flex-direction: row; /* B2B 桌面佈局：左右彈性排列 */
+            flex-direction: row; /* 桌面端：左固定選單，右滿版主工作區 */
             min-height: 100vh;
-            overflow-x: hidden;
+            width: 100vw;
+            overflow: hidden;
         }
 
         /* ==========================================================================
-           側邊欄導航系統（Flexbox 架構、完美置頂不留白、全面清空暗字雜訊）
+           1. 左側控制台導航欄 (完全復刻範本風格、高發光粉紅外框)
            ========================================================================== */
         aside {
-            width: 340px;
-            background: rgba(26, 8, 38, 0.95);
+            width: 290px;
+            background: rgba(9, 2, 14, 0.95);
             border-right: 2px solid var(--neon-magenta);
-            padding: 25px 15px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            flex-shrink: 0;
+            z-index: 100;
+            box-shadow: 5px 0 25px rgba(255, 0, 127, 0.2);
+        }
+
+        /* Logo 區 */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 4px;
+            background: rgba(255, 0, 127, 0.1);
+            border: 2px solid var(--neon-magenta);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            color: var(--neon-magenta);
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px var(--neon-magenta);
+        }
+
+        .logo-text h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #fff;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px var(--neon-magenta);
+        }
+
+        .logo-text p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+        }
+
+        /* 選單列表 */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .nav-item button {
+            width: 100%;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-dim);
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item button:hover {
+            color: #fff;
+            background: rgba(255, 0, 127, 0.05);
+            border-left: 2px solid var(--neon-magenta);
+        }
+
+        /* 作用中按鈕：高亮粉紅外框與發光特效 */
+        .nav-item button.active {
+            color: #fff;
+            background: rgba(255, 0, 127, 0.08);
+            border: 1px solid var(--neon-magenta);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+        }
+
+        /* 底部小組簽名區 */
+        .sidebar-footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid rgba(255, 0, 127, 0.2);
+            padding-top: 20px;
+        }
+
+        .avatar-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .footer-info h4 {
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .footer-info p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* ==========================================================================
+           2. 右側主工作面板 (頁面切換控制)
+           ========================================================================== */
+        .main-workspace {
+            flex: 1;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .page-view {
+            display: none;
+            width: 100%;
+            min-height: 100%;
+            animation: pageFadeIn 0.35s ease-out forwards;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: scale(0.99); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* ==========================================================================
+           分頁一：數據儀表板 (完全復刻自最新數據卡片範本)
+           ========================================================================== */
+        .dashboard-layout {
+            padding: 40px;
+        }
+
+        .badge-tag {
+            display: inline-block;
+            background: rgba(0, 255, 170, 0.1);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .dash-title {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        .dash-desc {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        /* 三顆指標核心卡片網格 */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 0, 127, 0.15); /* 使用粉紅微發光邊框 */
+            border-radius: 8px;
+            padding: 30px 25px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .card-icon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .card-icon-header svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--neon-cyan);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .trend-up {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-green);
+            font-size: 0.85rem;
+            background: rgba(0, 255, 170, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .metric-label {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
+            font-size: 2.4rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        .chart-box {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 0, 127, 0.1);
+            border-radius: 8px;
+            padding: 25px;
+            min-height: 200px;
+        }
+
+        .chart-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .chart-box p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* ==========================================================================
+           分頁二：雙直欄大滿版簡報頁面 (完全復刻自影片與簡報對分範本)
+           ========================================================================== */
+        .split-presentation-layout {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .split-left-text {
+            flex: 1.1;
+            padding: 40px;
+            overflow-y: auto;
+            border-right: 2px solid var(--neon-magenta); /* 橫切面大霓虹線 */
+        }
+
+        .split-right-media {
+            flex: 1;
+            background: rgba(20, 5, 30, 0.95);
+            padding: 40px 25px;
             display: flex;
             flex-direction: column;
             gap: 25px;
-            box-shadow: 5px 0 25px rgba(255, 0, 127, 0.15);
-            position: fixed;
-            top: 0; /* 鎖定在視窗最上方，絕不產生空白 */
-            left: 0;
-            height: 100vh;
             overflow-y: auto;
-            z-index: 100;
-            flex-shrink: 0;
         }
 
-        .meta-panel {
+        .meta-info-panel {
             border: 1px solid var(--neon-purple);
             padding: 20px;
             background: rgba(157, 0, 255, 0.05);
             border-radius: 4px;
+            margin-bottom: 30px;
         }
 
-        .meta-panel h3 {
+        .meta-info-panel h2 {
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
+        }
+
+        .intro-text-panel {
+            background: var(--panel-bg);
+            border-left: 4px solid var(--neon-magenta); /* 左緣改為粉霓虹高光 */
+            padding: 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.05);
+        }
+
+        .intro-text-panel h2 {
+            color: var(--neon-magenta);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .cases-section {
+            background: rgba(26, 8, 38, 0.8);
+            border: 1px solid var(--neon-purple);
+            padding: 25px;
+            border-radius: 6px;
+        }
+
+        .cases-section h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--neon-cyan);
-            font-size: 1.1rem;
             margin-bottom: 15px;
-            letter-spacing: 1px;
-            border-bottom: 1px solid var(--neon-purple);
-            padding-bottom: 5px;
+            font-size: 1.3rem;
         }
 
-        .meta-list {
-            list-style: none;
-            font-size: 0.9rem;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .case-block {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed rgba(255, 0, 127, 0.2);
+        }
+
+        .case-block:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .case-block h3 {
+            color: #fff;
+            margin-bottom: 6px;
+            font-size: 1.05rem;
+        }
+
+        .case-block p {
             color: var(--text-dim);
+            font-size: 0.85rem;
         }
 
-        .meta-list span {
-            color: var(--text-main);
-            font-weight: bold;
-        }
-
-        /* 影片播放區塊 */
-        .video-box {
+        /* 右半側多媒體比例盒 */
+        .media-responsive-wrapper {
             border: 1px solid var(--neon-magenta);
-            background: rgba(255, 0, 127, 0.05);
-            padding: 15px;
+            background: rgba(255, 0, 127, 0.02);
+            padding: 20px;
             border-radius: 4px;
-            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.15);
         }
 
-        .video-box h4 {
+        .media-responsive-wrapper h4 {
             font-size: 1rem;
             color: var(--neon-magenta);
             margin-bottom: 12px;
             font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
+            text-align: center;
         }
 
-        .video-container {
+        .responsive-iframe-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 標準 16:9 比例 */
+            padding-bottom: 56.25%; /* 完美的 16:9 比例 */
             height: 0;
             overflow: hidden;
             border: 1px solid var(--neon-purple);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
+            background: #000;
         }
 
-        .video-container iframe {
+        .responsive-iframe-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -128,370 +447,220 @@
         }
 
         /* ==========================================================================
-           主要報告內文區塊（大螢幕與 RWD 彈性伸縮）
+           RWD 響應式佈局縮放（平板與手機介面自適應）
            ========================================================================== */
-        main {
-            margin-left: 340px; /* 保留給固定側邊欄的寬度 */
-            flex: 1;
-            padding: 40px;
-            max-width: 1200px;
-            width: 100%;
-            transition: margin-left 0.3s ease, padding 0.3s ease;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            border-bottom: 2px solid var(--neon-magenta);
-            padding-bottom: 30px;
-        }
-
-        header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            color: #fff;
-            text-shadow: 0 0 15px var(--neon-magenta);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-cyan);
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-        }
-
-        .intro-panel {
-            background: var(--panel-bg);
-            border-left: 4px solid var(--neon-cyan);
-            padding: 25px;
-            margin-bottom: 40px;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
-        }
-
-        .intro-panel h2 {
-            color: var(--neon-cyan);
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-        }
-
-        .toggle-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap; /* 寬度不夠時按鈕自動向下流動換行 */
-        }
-
-        .toggle-btn {
-            background: transparent;
-            border: 2px solid var(--neon-magenta);
-            color: var(--neon-magenta);
-            padding: 12px 35px;
-            font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
-        }
-
-        .toggle-btn.active, .toggle-btn:hover {
-            background: var(--neon-magenta);
-            color: #fff;
-            box-shadow: 0 0 25px var(--neon-magenta);
-        }
-
-        /* ==========================================================================
-           數據展示看板（CSS Grid 自動網格排版）
-           ========================================================================== */
-        .view-section {
-            display: none;
-            animation: cubic-bezier(0.4, 0, 0.2, 1) fadeIn 0.4s forwards;
-        }
-
-        .view-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .grid-cards {
-            display: grid;
-            /* 自動填滿 (auto-fit)，卡片在最小 260px 到最大 1fr 之間彈性調整欄數 */
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            background: var(--panel-bg);
-            border: 1px solid rgba(255, 0, 127, 0.1);
-            padding: 25px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-        }
-
-        .card h3 {
-            font-size: 1.2rem;
-            color: #fff;
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 8px;
-        }
-
-        .card p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-        }
-
-        .highlight {
-            color: var(--neon-cyan);
-            font-weight: bold;
-        }
-
-        /* 案例研究區域（Flexbox 平行與垂直適應） */
-        .cases-section {
-            background: rgba(26, 8, 38, 0.8);
-            border: 1px solid var(--neon-purple);
-            padding: 30px;
-            border-radius: 6px;
-            margin-top: 40px;
-        }
-
-        .cases-section h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-cyan);
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px var(--neon-cyan);
-        }
-
-        .case-block {
-            display: flex;
-            flex-direction: row; /* 大螢幕下圖片與文字並排 */
-            gap: 30px;
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px dashed rgba(157, 0, 255, 0.2);
-            align-items: center;
-        }
-
-        .case-block:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .case-img-placeholder {
-            width: 220px;
-            height: 140px;
-            background: linear-gradient(135deg, var(--panel-bg) 0%, #301242 100%);
-            border: 1px solid var(--neon-magenta);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            color: var(--neon-magenta);
-            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
-            flex-shrink: 0;
-        }
-
-        .case-text h3 {
-            color: #fff;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .case-text p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-        }
-
-        /* ==========================================================================
-           RWD 響應式佈局切換機制 (Media Queries)
-           ========================================================================== */
-        
-        /* 平板、小筆電環境 (螢幕寬度小於 1024px) */
-        @media screen and (max-width: 1024px) {
+        @media screen and (max-width: 1150px) {
             body {
-                flex-direction: column; /* 整個版面自動切換為垂直堆疊 */
+                flex-direction: column;
             }
-
             aside {
-                position: relative; /* 解除左側固定狀態 */
-                width: 100%; /* 寬度自動滿版 */
-                height: auto; /* 高度隨內嵌影片與文字彈性撐開 */
+                width: 100%;
+                height: auto;
                 border-right: none;
                 border-bottom: 2px solid var(--neon-magenta);
-                box-shadow: 0 5px 25px rgba(255, 0, 127, 0.15);
-                top: auto;
+                padding: 20px;
             }
-
-            main {
-                margin-left: 0; /* 移除桌面端的左方間距 */
-                padding: 30px 20px;
+            .nav-menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-top: 15px;
             }
-
-            header h1 {
-                font-size: 2rem;
+            .main-workspace {
+                height: auto;
+                overflow-y: visible;
             }
-
-            .case-block {
-                flex-direction: column; /* 案例分析區改為上下排列 */
-                align-items: flex-start;
-                gap: 15px;
+            .metrics-grid {
+                grid-template-columns: 1fr;
             }
-
-            .case-img-placeholder {
-                width: 100%; /* 圖片容器在平版/手機上自動寬度滿版 */
-                height: 160px;
+            .charts-row {
+                grid-template-columns: 1fr;
             }
-        }
-
-        /* 智慧型手機環境 (螢幕寬度小於 480px) */
-        @media screen and (max-width: 480px) {
-            header h1 {
-                font-size: 1.6rem;
+            .split-presentation-layout {
+                flex-direction: column;
+                height: auto;
             }
-            .toggle-btn {
-                padding: 10px 20px;
-                font-size: 0.95rem;
-                width: 100%; /* 控制按鈕自動垂直全滿，便於手機點擊 */
-            }
-            .cases-section {
-                padding: 15px;
+            .split-left-text, .split-right-media {
+                width: 100%;
+                height: auto;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- 左側控制台導航欄 (完全復刻範本風格、高發光粉紅外框)[cite: 3] -->
     <aside>
-        <div class="meta-panel">
-            <h3>專題團隊資訊</h3>
-            <ul class="meta-list">
-                <li>科系：<span>流通科技管理科系</span></li>
-                <li>導師：<span>褚文明 教授</span></li>
-                <li>組員：<span>王湘芸、陳姿婷</span></li>
-            </ul>
-        </div>
-
-        <div class="video-box">
-            <h4>影片專欄播放</h4>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/IZlMuEshrDk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="top-navigation-block">
+            <div class="logo-area">
+                <div class="logo-icon">ESG</div>
+                <div class="logo-text">
+                    <h2>EcoLogiTech</h2>
+                    <p>SUSTAINABLE LOGISTICS</p>
+                </div>
             </div>
+
+            <!-- 選單分頁點擊動態路由[cite: 3] -->
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <button class="active" onclick="routeToPage(this, 'dashboard-page')">
+                        <span style="font-family:'Orbitron'">▚</span> 數據儀表板
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button onclick="routeToPage(this, 'presentation-page')">
+                        <span style="font-family:'Orbitron'">▞</span> 專題投影片
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button onclick="routeToPage(this, 'presentation-page')">
+                        <span style="font-family:'Orbitron'">⚙</span> 精選影音檔
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button onclick="alert('附件下載就緒')">
+                        <span style="font-family:'Orbitron'">⬇</span> 相關附件下載
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button onclick="alert('私房珍藏解鎖中')">
+                        <span style="font-family:'Orbitron'">♥</span> 私房珍藏館
+                    </button>
+                </li>
+            </ul>
         </div>
 
-        <div class="meta-panel" style="margin-top: auto;">
-            <h3>聯繫方式</h3>
-            <ul class="meta-list">
-                <li>電話：<span>0976517599</span></li>
-                <li>地址：<span>勤益科技大學</span></li>
-            </ul>
+        <div class="sidebar-footer">
+            <div class="avatar-circle">SL</div>
+            <div class="footer-info">
+                <h4>綠色科技研究組</h4>
+                <p>ESG 專題展示</p>
+            </div>
         </div>
     </aside>
 
-    <main>
-        <header>
-            <h1>物流範式轉移</h1>
-            <div class="subtitle">AI-POWERED VS LEGACY MARKETING // REPORT</div>
-        </header>
+    <!-- 右側主工作面板[cite: 3] -->
+    <main class="main-workspace">
 
-        <div class="intro-panel">
-            <h2>// 核心思維：物流即行銷，供應鏈即體驗</h2>
-            <p>在過去，物流是躲在幕後的「搬運工」，只要貨物準時抵達，工作就算完成。然而在 AI 技術爆發的今天，物流的角色早已躍升為企業的<span class="highlight">核心競爭力</span>。它不再只是後勤支援，而是品牌與客戶之間最真實、最感性的接觸點。AI 的價值在於消除等待的心理負擔，將冷冰冰的供應鏈轉化為溫暖的品牌承諾。</p>
-        </div>
+        <!-- ==========================================================================
+           分頁一：數據儀表板 (完全復刻自 image_94d2a1.jpg)[cite: 3]
+           ========================================================================== */
+        <div id="dashboard-page" class="page-view active">
+            <div class="dashboard-layout">
+                <span class="badge-tag">ESG METRICS & CORE DATA</span>
+                <h1 class="dash-title">ESG永續物流與綠色技術</h1>
+                <p class="dash-desc">本專案展示物流供應鏈於數位化轉型下的綠色技術實踐。透過大數據分析與智慧排程系統，減少碳足跡、提升電動載具自給率，建構永續發展的物流生態圈[cite: 1]。</p>
 
-        <div class="toggle-container">
-            <button class="toggle-btn active" onclick="toggleDashboard('ai-view')">AI 智慧物流行銷</button>
-            <button class="toggle-btn" onclick="toggleDashboard('legacy-view')">傳統物流行銷</button>
-        </div>
+                <div class="metrics-grid">
+                    <!-- 卡片 1 -->
+                    <div class="metric-card">
+                        <div class="card-icon-header">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                            <span class="trend-up">↗ +14.8%</span>
+                        </div>
+                        <p class="metric-label">累計碳排放減量</p>
+                        <h2 class="metric-value">124,850 <span>t</span></h2>
+                    </div>
+                    <!-- 卡片 2 -->
+                    <div class="metric-card">
+                        <div class="card-icon-header">
+                            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>
+                            <span class="trend-up">↗ +8.2%</span>
+                        </div>
+                        <p class="metric-label">新能源電動車佔比</p>
+                        <h2 class="metric-value">42.5 %</h2>
+                    </div>
+                    <!-- 卡片 3 -->
+                    <div class="metric-card">
+                        <div class="card-icon-header">
+                            <svg viewBox="0 0 24 24"><path d="M13 2v9h9V2h-9zm7 7h-5V4h5v5zm-7 13h9v-9h-9v9zm5-5h-5v-5h5v5zM2 22h9v-9H2v9zm5-5H4v-5h3v5zM2 2v9h9V2H2zm5 5H4V4h3v3z"/></svg>
+                            <span class="trend-up">↗ +12.4%</span>
+                        </div>
+                        <p class="metric-label">智慧倉儲綠電自給率</p>
+                        <h2 class="metric-value">68.0 %</h2>
+                    </div>
+                </div>
 
-        <div id="ai-view" class="view-section active">
-            <div class="grid-cards">
-                <div class="card">
-                    <h3>核心賣點 (Value)</h3>
-                    <p>強調<span class="highlight">「彈性預測、動態履約、綠色溢價」</span>。著重於系統抵抗不確定性的能力與黑天鵝免疫力。</p>
-                </div>
-                <div class="card">
-                    <h3>數據角色 (Data)</h3>
-                    <p>運用<span class="highlight">「需求感測（Demand Sensing）」</span>化為行銷武器，主動告知客戶如何避開即時港口延誤與氣候風險。</p>
-                </div>
-                <div class="card">
-                    <h3>客戶體驗 (CX)</h3>
-                    <p>藉由 <span class="highlight">AI Agent 智能共感</span>即時摘要關務與異常警示，在貨主提問、產生等待焦慮前即主動給予解決方案。</p>
-                </div>
-                <div class="card">
-                    <h3>品牌永續 (ESG)</h3>
-                    <p>將 AI 即時路徑優化轉為<span class="highlight">「範疇三減碳數據」</span>儀表板，直接助客戶滿足國際關稅與綠色鏈要求。</p>
+                <div class="charts-row">
+                    <div class="chart-box">
+                        <h3>全球綠色物流市場產值規模趨勢</h3>
+                        <p>預估 2020 年至 2026 年綠色供應鏈市場規模之增長趨勢 (十億美元)</p>
+                    </div>
+                    <div class="chart-box">
+                        <h3>核心減碳技術貢獻佔比</h3>
+                        <p>各項永續綠色技術模組對年度碳排放降低的貢獻權重比 (%)</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="legacy-view" class="view-section">
-            <div class="grid-cards">
-                <div class="card" style="border-color: rgba(157,0,255,0.2)">
-                    <h3>核心賣點 (Value)</h3>
-                    <p>強調「準時、安全、便宜」。著重於車隊、倉庫面積等實體資產與標準 SLA 的被動推銷。</p>
+        <!-- ==========================================================================
+           分頁二：雙直欄大滿版簡報頁面 (完全復刻自影片與簡報對分範本)[cite: 3]
+           ========================================================================== */
+        <div id="presentation-page" class="page-view">
+            <div class="split-presentation-layout">
+                <!-- 左半部：報告文字大綱 -->
+                <div class="split-left-text">
+                    <div class="meta-info-panel">
+                        <h2>// 專題團隊與機構資訊</h2>
+                        <p style="font-size: 0.9rem; line-height: 1.8; color: var(--text-dim);">
+                            學門機構：<span style="color: var(--text-main);">勤益科技大學 流通科技管理科系</span><br>
+                            指導導師：<span style="color: var(--text-main);">褚文明 教授</span> &nbsp;|&nbsp; 專案組員：<span style="color: var(--text-main);">王湘芸、陳姿婷</span><br>
+                            聯繫管道：<span style="color: var(--neon-cyan);">0976517599</span>
+                        </p>
+                    </div>
+
+                    <div class="intro-text-panel">
+                        <h2>// 核心思維：物流即行銷，供應鏈即體驗</h2>
+                        <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-dim);">
+                            在過去，物流是躲在幕後的「搬運工」，只要貨物準時抵達，工作就算完成[cite: 1, 3]。然而在 AI 技術爆發的今天，物流的角色早已躍升為企業的<span class="highlight">核心競爭力</span>[cite: 1, 3]。它不再只是後勤支援，而是品牌與客戶之間最真實、最感性的接觸點[cite: 1, 3]。AI 的價值在於消除未知所產生的等待焦慮，將冰冷的鏈路轉化為溫暖的品牌承諾[cite: 1, 3]。
+                        </p>
+                    </div>
+
+                    <div class="cases-section">
+                        <h2>// 實例動態分析 (CASE STUDIES)</h2>
+                        <div class="case-block">
+                            <h3>亞馬遜 (Amazon) — 預測式發貨 (Anticipatory Shipping)</h3>
+                            <p>運用 AI 專利算法分析使用者的瀏覽紀錄、購物車與停留時間[cite: 1, 3]。在消費者點擊購買前，系統便提前將商品運往距離該市場最近的衛星倉儲，創造頂級的行銷與履約體驗[cite: 1, 3]。</p>
+                        </div>
+                        <div class="case-block">
+                            <h3>全聯福利中心 — 智慧補貨與動態履約</h3>
+                            <p>引進自動化物流中心並與氣象、歷史大數據連動，在颱風或大節慶來臨前透過 AI 需求感測提早調配車隊與路線[cite: 1, 3]。當消費者在關鍵時刻看到滿滿的生鮮貨架，便建立起極高的品牌信賴感[cite: 1, 3]。</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card" style="border-color: rgba(157,0,255,0.2)">
-                    <h3>數據角色 (Data)</h3>
-                    <p>屬於「後驗式歷史報告」。行銷素材多為過去到貨率、年度營收等落後指標，手段單向被動。</p>
-                </div>
-                <div class="card" style="border-color: rgba(157,0,255,0.2)">
-                    <h3>客戶體驗 (CX)</h3>
-                    <p>僅提供單向查單編號（Tracking ID）。缺乏同理心，多屬於客戶有問、物流才答的被動告知機制。</p>
-                </div>
-                <div class="card" style="border-color: rgba(157,0,255,0.2)">
-                    <h3>品牌永續 (ESG)</h3>
-                    <p>流於「口號式 CSR」。停留在改用電子發票、配合種樹等缺乏數據支持的表面綠化（Greenwashing）。</p>
+
+                <!-- 右半部：多媒體展示區 (影片與 PPT 大畫面上下並列) -->
+                <div class="split-right-media">
+                    <div class="media-responsive-wrapper">
+                        <h4>精選影音檔專欄播放</h4>
+                        <div class="responsive-iframe-container">
+                            <iframe src="https://www.youtube.com/embed/IZlMuEshrDk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="media-responsive-wrapper">
+                        <h4>永續物流與綠色科技 專題簡報 PPT</h4>
+                        <div class="responsive-iframe-container">
+                            <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=https://raw.githubusercontent.com/GitHubAnson/AI-logistics-marketing/main/AI_Logistics_Transformation.pptx" frameborder="0"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="cases-section">
-            <h2>// 實例動態分析 (CASE STUDIES)</h2>
-            
-            <div class="case-block">
-                <div class="case-img-placeholder">[ AMAZON AI DIAGRAM ]</div>
-                <div class="case-text">
-                    <h3>亞馬遜 (Amazon) — 預測式發貨 (Anticipatory Shipping)</h3>
-                    <p>運用 AI 專利算法分析使用者的瀏覽紀錄、購物車與停留時間。在消費者點擊購買前，系統便提前將商品运往距離該市場最近的衛星倉儲。這種極致的速度創造了傳統行銷無法比擬的「品牌驚艷體驗」。</p>
-                </div>
-            </div>
-
-            <div class="case-block">
-                <div class="case-img-placeholder">[ PX MART INTELLIGENT ]</div>
-                <div class="case-text">
-                    <h3>全聯福利中心 — 智慧補貨與動態履約</h3>
-                    <p>引進自動化物流中心並與氣象、歷史大數據連動，在颱風或大節慶來臨前透過 AI 需求感測提早調配車隊與路線。當消費者在關鍵時刻看到滿滿的生鮮貨架，便在心中建立起極高的品牌信賴與依賴感。</p>
-                </div>
-            </div>
-        </div>
     </main>
 
+    <!-- 頁面路由切換邏輯 -->
     <script>
-        function toggleDashboard(targetId) {
-            document.querySelectorAll('.view-section').forEach(view => {
-                view.classList.remove('active');
-            });
-            document.querySelectorAll('.toggle-btn').forEach(btn => {
+        function routeToPage(btnElement, targetPageId) {
+            document.querySelectorAll('.nav-item button').forEach(btn => {
                 btn.classList.remove('active');
             });
+            btnElement.classList.add('active');
 
-            document.getElementById(targetId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            document.querySelectorAll('.page-view').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(targetPageId).classList.add('active');
         }
     </script>
 </body>
