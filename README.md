@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 時代物流行銷 vs 傳統行銷 | 專題發表控制台</title>
+    <title>AI 時代物流行銷 vs 傳統行銷 | 典範轉移報告</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500;700&display=swap');
 
         :root {
-            --bg-dark: #0a0c14;
-            --sidebar-bg: #111424;
-            --card-bg: #171b30;
-            --neon-blue: #00e5ff;
-            --neon-pink: #ff2a85;
-            --neon-green: #39ff14;
-            --text-light: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border-color: rgba(0, 229, 255, 0.15);
+            --bg-color: #0d0214;
+            --panel-bg: #1a0826;
+            --neon-magenta: #ff007f;
+            --neon-cyan: #00f0ff;
+            --neon-purple: #9d00ff;
+            --text-main: #f0e6f5;
+            --text-dim: #a692b3;
+            --grid-color: rgba(255, 0, 127, 0.05);
         }
 
         * {
@@ -26,436 +25,403 @@
         }
 
         body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 25px 25px;
             display: flex;
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
-            background-size: 25px 25px;
         }
 
-        /* Sidebar Navigation */
+        /* 側邊欄導航樣式 */
         aside {
-            width: 280px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
+            width: 320px;
+            background: rgba(26, 8, 38, 0.95);
+            border-right: 2px solid var(--neon-magenta);
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
+            gap: 30px;
+            box-shadow: 5px 0 25px rgba(255, 0, 127, 0.15);
             position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
+            height: 100vh;
+            overflow-y: auto;
             z-index: 100;
-            transition: all 0.3s ease;
         }
 
-        .sidebar-header {
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        .meta-panel {
+            border: 1px solid var(--neon-purple);
+            padding: 20px;
+            background: rgba(157, 0, 255, 0.05);
+            border-radius: 4px;
         }
 
-        .sidebar-header h2 {
+        .meta-panel h3 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+            color: var(--neon-cyan);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--neon-purple);
+            padding-bottom: 5px;
+        }
+
+        .meta-list {
+            list-style: none;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: var(--text-dim);
+        }
+
+        .meta-list span {
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .video-box {
+            border: 1px solid var(--neon-magenta);
+            background: rgba(255, 0, 127, 0.05);
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .video-box h4 {
+            font-size: 1rem;
+            color: var(--neon-magenta);
+            margin-bottom: 12px;
+            font-family: 'Orbitron', sans-serif;
             letter-spacing: 1px;
         }
 
-        .sidebar-menu {
-            list-style: none;
-            padding: 20px 0;
-            flex-grow: 1;
-        }
-
-        .sidebar-menu li a {
-            display: flex;
-            align-items: center;
-            padding: 15px 25px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            border-left: 4px solid transparent;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+        .video-link-btn {
+            display: inline-block;
+            background: var(--neon-magenta);
             color: #fff;
-            background: linear-gradient(90deg, rgba(0, 229, 255, 0.05), transparent);
-            border-left-color: var(--neon-blue);
-        }
-
-        .sidebar-footer {
-            padding: 20px;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Main Content Wrapper */
-        main {
-            margin-left: 280px;
-            flex-grow: 1;
-            padding: 40px;
+            border-radius: 3px;
+            box-shadow: 0 0 15px var(--neon-magenta);
             transition: all 0.3s ease;
+            width: 100%;
         }
 
-        /* Content Sections */
-        .section-panel {
+        .video-link-btn:hover {
+            background: #fff;
+            color: var(--bg-color);
+            box-shadow: 0 0 25px #fff;
+        }
+
+        /* 主要內容區域 */
+        main {
+            margin-left: 320px;
+            flex: 1;
+            padding: 40px;
+            max-width: 1200px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--neon-magenta);
+            padding-bottom: 30px;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 0 0 15px var(--neon-magenta);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .intro-panel {
+            background: var(--panel-bg);
+            border-left: 4px solid var(--neon-cyan);
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .intro-panel h2 {
+            color: var(--neon-cyan);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        /* 互動切換按鈕控制 */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: 2px solid var(--neon-magenta);
+            color: var(--neon-magenta);
+            padding: 12px 35px;
+            font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
+        }
+
+        .toggle-btn.active, .toggle-btn:hover {
+            background: var(--neon-magenta);
+            color: #fff;
+            box-shadow: 0 0 25px var(--neon-magenta);
+        }
+
+        /* 視圖內容與動畫 */
+        .view-section {
             display: none;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: cubic-bezier(0.4, 0, 0.2, 1) fadeIn 0.4s forwards;
         }
 
-        .section-panel.active {
+        .view-section.active {
             display: block;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 {
-            font-size: 2.2rem;
-            color: #fff;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .section-desc {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 1.05rem;
-        }
-
-        /* Grid Layouts */
-        .dashboard-grid {
+        .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
         }
 
-        .info-card {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 0, 127, 0.1);
             padding: 25px;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border-radius: 4px;
             transition: all 0.3s ease;
         }
 
-        .info-card:hover {
-            border-color: var(--border-color);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
-            transform: translateY(-2px);
+        .card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
         }
 
-        .card-accent-pink { border-top: 3px solid var(--neon-pink); }
-        .card-accent-blue { border-top: 3px solid var(--neon-blue); }
-
-        .info-card h3 {
-            font-size: 1.25rem;
+        .card h3 {
+            font-size: 1.2rem;
             color: #fff;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
         }
 
-        .info-card p {
-            color: var(--text-muted);
+        .card p {
+            color: var(--text-dim);
             font-size: 0.95rem;
-            line-height: 1.6;
         }
 
         .highlight {
-            color: var(--neon-green);
+            color: var(--neon-cyan);
             font-weight: bold;
         }
 
-        /* Comparison Matrix / Table */
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-top: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        .matrix-table th, .matrix-table td {
-            padding: 18px 20px;
-            text-align: left;
-        }
-
-        .matrix-table th {
-            background-color: rgba(0, 229, 255, 0.05);
-            color: var(--neon-blue);
-            font-weight: 600;
-            font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .matrix-table td {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.95rem;
-        }
-
-        .matrix-table tr:hover {
-            background-color: rgba(255, 255, 255, 0.01);
-        }
-
-        /* SVG Trend Chart Component */
-        .chart-container {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+        /* 實例分析區塊與預留圖容器 */
+        .cases-section {
+            background: rgba(26, 8, 38, 0.8);
+            border: 1px solid var(--neon-purple);
             padding: 30px;
-            margin-bottom: 35px;
+            border-radius: 6px;
+            margin-top: 40px;
         }
 
-        .chart-header {
+        .cases-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .case-block {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px dashed rgba(157, 0, 255, 0.2);
         }
 
-        .chart-title {
-            font-size: 1.2rem;
-            font-weight: bold;
+        .case-block:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .case-img-placeholder {
+            width: 220px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--panel-bg) 0%, #301242 100%);
+            border: 1px solid var(--neon-magenta);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--neon-magenta);
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
+            flex-shrink: 0;
+        }
+
+        .case-text h3 {
             color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
         }
 
-        .chart-legend {
-            display: flex;
-            gap: 15px;
-            font-size: 0.85rem;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .legend-dot-pink { width: 12px; height: 12px; background-color: var(--neon-pink); border-radius: 2px; }
-        .legend-dot-blue { width: 12px; height: 12px; background-color: var(--neon-blue); border-radius: 2px; }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            aside {
-                width: 70px;
-            }
-            aside .sidebar-header h2, aside .sidebar-menu span, aside .sidebar-footer {
-                display: none;
-            }
-            aside .sidebar-menu li a {
-                padding: 15px 0;
-                justify-content: center;
-                border-left: none;
-                border-bottom: 3px solid transparent;
-            }
-            aside .sidebar-menu li a:hover, aside .sidebar-menu li a.active {
-                border-bottom-color: var(--neon-blue);
-                background: transparent;
-            }
-            main {
-                margin-left: 70px;
-                padding: 25px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            body {
-                flex-direction: column;
-            }
-            aside {
-                width: 100%;
-                height: auto;
-                position: relative;
-                flex-direction: row;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-            }
-            aside .sidebar-menu {
-                display: flex;
-                padding: 0;
-                width: 100%;
-                justify-content: space-around;
-            }
-            main {
-                margin-left: 0;
-                padding: 20px;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
+        .case-text p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- 側邊欄導航 (Sidebar Navigation) -->
     <aside>
-        <div class="sidebar-header">
-            <h2>LOGISTICS MARKETING</h2>
+        <div class="meta-panel">
+            <h3>專題團隊資訊</h3>
+            <ul class="meta-list">
+                <li>科系：<span>流通科技管理科系</span></li>
+                <li>導師：<span>褚文明 教授</span></li>
+                <li>組員：<span>王湘芸、陳姿婷</span></li>
+            </ul>
         </div>
-        <ul class="sidebar-menu">
-            <li><a class="active" onclick="showPanel('overview')"><span>核心思維</span></a></li>
-            <li><a onclick="showPanel('matrix')"><span>四大維度對比</span></a></li>
-            <li><a onclick="showPanel('trends')"><span>市場趨勢圖表</span></a></li>
-            <li><a onclick="showPanel('cases')"><span>實例深度解析</span></a></li>
-        </ul>
-        <div class="sidebar-footer">
-            SYS STATUS: ACTIVE V4.0
+
+        <div class="video-box">
+            <h4>影片專欄導航</h4>
+            <a href="https://www.youtube.com/watch?v=IZlMuEshrDk&list=PL_nwzy0L5KTjo123n_kHLs43EiDX1bNM_" target="_blank" class="video-link-btn">開啟觀看專欄</a>
+        </div>
+
+        <div class="meta-panel" style="margin-top: auto;">
+            <h3>聯繫方式</h3>
+            <ul class="meta-list">
+                <li>電話：<span>0976517599</span></li>
+                <li>學校：<span>勤益科技大學</span></li>
+            </ul>
         </div>
     </aside>
 
-    <!-- 主要內容區 (Main Content Wrapper) -->
     <main>
-        
-        <!-- 核心思維 Section -->
-        <section id="overview" class="section-panel active">
-            <h1>AI 時代物流行銷變革</h1>
-            <p class="section-desc">探討智慧供應鏈如何從幕後勞力活，躍升為前線最具溫度的品牌行銷利器。</p>
-            
-            <div class="dashboard-grid">
-                <div class="info-card card-accent-pink">
-                    <h3>傳統物流行銷的侷限</h3>
-                    <p>過去通常著重於 4P 理論中的「通路 (Place)」與基礎的「推廣 (Promotion)」。宣傳焦點單純擺在標準資產的被動推銷上（如：我有幾台貨車、多大的低溫倉儲），容易落入惡性的<span class="highlight">削價競標與硬體資產死拼</span>。</p>
-                </div>
-                <div class="info-card card-accent-blue">
-                    <h3>AI 時代的新典範</h3>
-                    <p>新一代物流行銷早已超越「把貨送好」的範疇。AI 技術的演進，賦予了物流商前所未有的「預測力、透明度與履約彈性」，轉化為能主動幫品牌主與消費者排除未知等待焦慮的<span class="highlight">「體驗型價值行銷」</span>。</p>
-                </div>
-            </div>
-        </section>
+        <header>
+            <h1>LOGISTICS PARADIGM SHIFT</h1>
+            <div class="subtitle">AI-POWERED VS LEGACY MARKETING // REPORT</div>
+        </header>
 
-        <!-- 四大維度對比 Section -->
-        <section id="matrix" class="section-panel">
-            <h1>新舊物流行銷對比矩陣</h1>
-            <p class="section-desc">深入分析兩者在核心價值、數據應用、客戶體驗及永續敘事上的本質差異。</p>
-            
-            <table class="matrix-table">
-                <thead>
-                    <tr>
-                        <th style="width: 20%;">比較維度</th>
-                        <th style="width: 40%;">傳統物流行銷 (Legacy)</th>
-                        <th style="width: 40%;">AI 時代物流行銷 (AI-Powered)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="font-weight: bold; color: #fff;">核心賣點 (Value)</td>
-                        <td><strong>被動承諾：</strong> 強調「準時、安全、便宜」，展示的是硬體設備與基礎 SLA。</td>
-                        <td><strong>主動預測：</strong> 強調「彈性預測、動態履約、黑天鵝免疫力」，展現供應鏈韌性。</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: bold; color: #fff;">數據應用 (Data)</td>
-                        <td><strong>後驗式歷史報告：</strong> 提供落後的年度到貨率、營收數據，偏向靜態的實力證明。</td>
-                        <td><strong>即時預測型展示：</strong> 結合「需求感測（Demand Sensing）」，在痛點發生前精準投放解決方案。</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: bold; color: #fff;">客戶體驗 (CX)</td>
-                        <td><strong>單向被動告知：</strong> 提供 Tracking ID 查單編號，有問才答，缺乏消除等待焦慮的同理心。</td>
-                        <td><strong>AI Agent 智能共感：</strong> 利用生成式 AI 助理即時主動推播關務、異常警示與最優替代路徑。</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: bold; color: #fff;">品牌永續 (ESG)</td>
-                        <td><strong>口號環保：</strong> 停留在改用電子發票、配合種樹等邊緣化且無法量化的環保包裝（Greenwashing）。</td>
-                        <td><strong>數據化綠色競爭力：</strong> 即時優化低碳路徑，提供清晰的「範疇三」減碳數據儀表板，幫客戶省關稅。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <div class="intro-panel">
+            <h2>// 核心思維：物流即行銷，供應鏈即體驗</h2>
+            <p>在過去，物流是躲在幕後的「搬運工」，只要貨物準時抵達，工作就算完成。然而在 AI 技術爆發的今天，物流的角色早已躍升為企業的<span class="highlight">核心競爭力</span>。它不再只是後勤支援，而是品牌與客戶之間最真實、最感性的接觸點。AI 的價值在於消除等待的心理負擔，將冷冰冰的供應鏈轉化為溫暖的品牌承諾。</p>
+        </div>
 
-        <!-- 市場趨勢圖表 Section -->
-        <section id="trends" class="section-panel">
-            <h1>AI 物流行銷技術投資與效益趨勢</h1>
-            <p class="section-desc">透過動態可視化圖表觀察全球企業轉向預測性物流後的指標增長。</p>
-            
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div class="chart-title">2021 - 2026 企業行銷溢價與客戶留存效益曲線 (指標指數)</div>
-                    <div class="chart-legend">
-                        <div class="legend-item"><div class="legend-dot-pink"></div>傳統模式效益</div>
-                        <div class="legend-item"><div class="legend-dot-blue"></div>AI 預測物流效益</div>
-                    </div>
+        <div class="toggle-container">
+            <button class="toggle-btn active" onclick="toggleDashboard('ai-view')">AI 智慧物流行銷</button>
+            <button class="toggle-btn" onclick="toggleDashboard('legacy-view')">傳統物流行銷</button>
+        </div>
+
+        <div id="ai-view" class="view-section active">
+            <div class="grid-cards">
+                <div class="card">
+                    <h3>核心賣點 (Value)</h3>
+                    <p>強調<span class="highlight">「彈性預測、動態履約、綠色溢價」</span>。著重於系統抵抗不確定性的能力與黑天鵝免疫力。</p>
                 </div>
-                <!-- SVG Line Chart Component -->
-                <svg viewBox="0 0 800 350" width="100%" height="100%" style="background: rgba(0,0,0,0.1); border-radius: 4px;">
-                    <!-- Grid Lines -->
-                    <line x1="50" y1="50" x2="750" y2="50" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                    <line x1="50" y1="125" x2="750" y2="125" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                    <line x1="50" y1="200" x2="750" y2="200" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                    <line x1="50" y1="275" x2="750" y2="275" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                    
-                    <!-- Axis -->
-                    <line x1="50" y1="300" x2="750" y2="300" stroke="var(--border-color)" stroke-width="2" />
-                    <line x1="50" y1="30" x2="50" y2="300" stroke="var(--border-color)" stroke-width="2" />
-                    
-                    <!-- X Axis Labels -->
-                    <text x="50" y="325" fill="var(--text-muted)" font-size="12" text-anchor="middle">2021</text>
-                    <text x="190" y="325" fill="var(--text-muted)" font-size="12" text-anchor="middle">2022</text>
-                    <text x="330" y="325" fill="var(--text-muted)" font-size="12" text-anchor="middle">2023</text>
-                    <text x="470" y="325" fill="var(--text-muted)" font-size="12" text-anchor="middle">2024</text>
-                    <text x="610" y="325" fill="var(--text-muted)" font-size="12" text-anchor="middle">2025</text>
-                    <text x="750" y="325" fill="var(--text-muted)" font-size="12" text-anchor="middle">2026</text>
-
-                    <!-- Legacy Trend Line (Pink) -->
-                    <path d="M 50 220 L 190 230 L 330 240 L 470 255 L 610 260 L 750 270" fill="none" stroke="var(--neon-pink)" stroke-width="3" stroke-dasharray="4" />
-                    <circle cx="750" cy="270" r="4" fill="var(--neon-pink)" />
-                    
-                    <!-- AI Era Trend Line (Cyan) -->
-                    <path d="M 50 200 L 190 170 L 330 130 L 470 90 L 610 60 L 750 45" fill="none" stroke="var(--neon-blue)" stroke-width="4" />
-                    <circle cx="750" cy="45" r="5" fill="var(--neon-blue)" />
-                </svg>
-            </div>
-        </section>
-
-        <!-- 實例深度解析 Section -->
-        <section id="cases" class="section-panel">
-            <h1>頂尖標竿企業實例 (Case Studies)</h1>
-            <p class="section-desc">解析國內外領導品牌如何藉由 AI 供應鏈算力顛覆傳統行銷模式。</p>
-            
-            <div class="dashboard-grid">
-                <div class="info-card">
-                    <h3>Amazon 預測式發貨</h3>
-                    <p>亞馬遜的 AI 模型會分析用戶的瀏覽歷史、購物車停留時間與氣象數據。在用戶甚至<span class="highlight">尚未點擊購買按鈕之前</span>，AI 就已經通知物流車隊將商品提前送往距離該客群最近的衛星倉儲，將出貨時間壓縮至極致。這不是後勤，這是利用極致交付速度打造的「驚艷體驗行銷」。</p>
+                <div class="card">
+                    <h3>數據角色 (Data)</h3>
+                    <p>運用<span class="highlight">「需求感測（Demand Sensing）」</span>化為行銷武器，主動告知客戶如何避開即時港口延誤與氣候風險。</p>
                 </div>
-                <div class="info-card">
-                    <h3>全聯福利中心 智慧補貨機制</h3>
-                    <p>當颱風侵襲或中元大促時，傳統物流往往需要各店長回報才調度，錯失黃金商機。全聯自動化物流中心導入 AI 需求感測（Demand Sensing），與中央氣象數據深度連動，自動精算搶購潮並提前佈局車隊。讓消費者在惡劣天氣走到店內依然有滿滿商品可買，完美建立<span class="highlight">「關鍵時刻，全聯都在」</span>的品牌依賴。支援品牌最高階的行為行銷。</p>
+                <div class="card">
+                    <h3>客戶體驗 (CX)</h3>
+                    <p>藉由 <span class="highlight">AI Agent 智能共感</span>即時摘要關務與異常警示，在貨主提問、產生等待焦慮前即主動給予解決方案。</p>
+                </div>
+                <div class="card">
+                    <h3>品牌永續 (ESG)</h3>
+                    <p>將 AI 即時路徑優化轉為<span class="highlight">「範疇三減碳數據」</span>儀表板，直接助客戶滿足國際關稅與綠色鏈要求。</p>
                 </div>
             </div>
-        </section>
+        </div>
 
+        <div id="legacy-view" class="view-section">
+            <div class="grid-cards">
+                <div class="card" style="border-color: rgba(157,0,255,0.2)">
+                    <h3>核心賣點 (Value)</h3>
+                    <p>強調「準時、安全、便宜」。著重於車隊、倉庫面積等實體資產與標準 SLA 的被動推銷。</p>
+                </div>
+                <div class="card" style="border-color: rgba(157,0,255,0.2)">
+                    <h3>數據角色 (Data)</h3>
+                    <p>屬於「後驗式歷史報告」。行銷素材多為過去到貨率、年度營收等落後指標，手段單向被動。</p>
+                </div>
+                <div class="card" style="border-color: rgba(157,0,255,0.2)">
+                    <h3>客戶體驗 (CX)</h3>
+                    <p>僅提供單向查單編號（Tracking ID）。缺乏同理心，多屬於客戶有問、物流才答的被動告知機制。</p>
+                </div>
+                <div class="card" style="border-color: rgba(157,0,255,0.2)">
+                    <h3>品牌永續 (ESG)</h3>
+                    <p>流於「口號式 CSR」。停留在改用電子發票、配合種樹等缺乏數據支持的表面綠化（Greenwashing）。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cases-section">
+            <h2>// 實例動態分析 (CASE STUDIES)</h2>
+            
+            <div class="case-block">
+                <div class="case-img-placeholder">[ AMAZON AI DIAGRAM ]</div>
+                <div class="case-text">
+                    <h3>亞馬遜 (Amazon) — 預測式發貨 (Anticipatory Shipping)</h3>
+                    <p>運用 AI 專利算法分析使用者的瀏覽紀錄、購物車與停留時間。在消費者點擊購買前，系統便提前將商品運往距離該市場最近的衛星倉儲。這種極致的速度創造了傳統行銷無法比擬的「品牌驚艷體驗」。</p>
+                </div>
+            </div>
+
+            <div class="case-block">
+                <div class="case-img-placeholder">[ PX MART INTELLIGENT ]</div>
+                <div class="case-text">
+                    <h3>全聯福利中心 — 智慧補貨與動態履約</h3>
+                    <p>引進自動化物流中心並與氣象、歷史大數據連動，在颱風或大節慶來臨前透過 AI 需求感測提早調配車隊與路線。當消費者在關鍵時刻看到滿滿的生鮮貨架，便在心中建立起極高的品牌信賴與依賴感。</p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script>
-        // Tab / Panel Switch Logic
-        function showPanel(panelId) {
-            // Hide all sections
-            document.querySelectorAll('.section-panel').forEach(panel => {
-                panel.classList.remove('active');
+        function toggleDashboard(targetId) {
+            // 隱藏所有的內容面板
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active');
             });
-            
-            // Remove active style from menu links
-            document.querySelectorAll('.sidebar-menu li a').forEach(link => {
-                link.classList.remove('active');
+            // 重設所有按鈕的啟用狀態
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
 
-            // Active current section & button
-            document.getElementById(panelId).classList.add('active');
+            // 啟用當前點擊的面板與按鈕
+            document.getElementById(targetId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
     </script>
