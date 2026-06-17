@@ -33,20 +33,20 @@
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 25px 25px;
             display: flex;
-            flex-direction: row; /* 預設大螢幕為左右並排 */
+            flex-direction: row;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         /* 側邊欄導航樣式（大螢幕固定在左側） */
         aside {
-            width: 320px;
+            width: 340px;
             background: rgba(26, 8, 38, 0.95);
             border-right: 2px solid var(--neon-magenta);
-            padding: 30px 20px;
+            padding: 25px 15px;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
             box-shadow: 5px 0 25px rgba(255, 0, 127, 0.15);
             position: fixed;
             height: 100vh;
@@ -86,6 +86,7 @@
             font-weight: bold;
         }
 
+        /* 影片專欄內嵌容器 */
         .video-box {
             border: 1px solid var(--neon-magenta);
             background: rgba(255, 0, 127, 0.05);
@@ -102,30 +103,29 @@
             letter-spacing: 1px;
         }
 
-        .video-link-btn {
-            display: inline-block;
-            background: var(--neon-magenta);
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            font-family: 'Orbitron', sans-serif;
-            border-radius: 3px;
-            box-shadow: 0 0 15px var(--neon-magenta);
-            transition: all 0.3s ease;
+        /* 讓 YouTube iFrame 具備響應式比例 */
+        .video-container {
+            position: relative;
             width: 100%;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            overflow: hidden;
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
         }
 
-        .video-link-btn:hover {
-            background: #fff;
-            color: var(--bg-color);
-            box-shadow: 0 0 25px #fff;
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         /* 主要內容區域 */
         main {
-            margin-left: 320px; /* 為了留出左側固定側邊欄的空間 */
+            margin-left: 340px;
             flex: 1;
             padding: 40px;
             max-width: 1200px;
@@ -177,7 +177,7 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 40px;
-            flex-wrap: wrap; /* 避免按鈕在小螢幕擠壓變形 */
+            flex-wrap: wrap;
         }
 
         .toggle-btn {
@@ -216,7 +216,6 @@
 
         .grid-cards {
             display: grid;
-            /* 使用 auto-fit 自動根據可用寬度調整欄數，最少 260px 一欄 */
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
@@ -253,7 +252,7 @@
             font-weight: bold;
         }
 
-        /* 實例分析區塊與預留圖容器 */
+        /* 實例分析區塊 */
         .cases-section {
             background: rgba(26, 8, 38, 0.8);
             border: 1px solid var(--neon-purple);
@@ -271,7 +270,7 @@
 
         .case-block {
             display: flex;
-            flex-direction: row; /* 預設左右並排 */
+            flex-direction: row;
             gap: 30px;
             margin-bottom: 30px;
             padding-bottom: 30px;
@@ -311,47 +310,42 @@
             font-size: 0.95rem;
         }
 
-        /* ==========================================================================
-           響應式網頁設計 (RWD) 媒體查詢
-           ========================================================================== */
-        
-        /* 當螢幕寬度小於 992px（如平板、小筆電或手機）時優化佈局 */
+        /* RWD 響應式調整 */
         @media screen and (max-width: 992px) {
             body {
-                flex-direction: column; /* 改為上下垂直排列 */
+                flex-direction: column;
             }
 
             aside {
-                position: relative; /* 取消固定定位 */
-                width: 100%; /* 寬度滿版 */
-                height: auto; /* 高度自動 */
+                position: relative;
+                width: 100%;
+                height: auto;
                 border-right: none;
                 border-bottom: 2px solid var(--neon-magenta);
                 box-shadow: 0 5px 25px rgba(255, 0, 127, 0.15);
             }
 
             main {
-                margin-left: 0; /* 清空主畫面左邊距，填滿寬度 */
+                margin-left: 0;
                 padding: 20px;
             }
 
             header h1 {
-                font-size: 2rem; /* 主標題字體縮小 */
+                font-size: 2rem;
             }
 
             .case-block {
-                flex-direction: column; /* 實例區改為上下排列 */
+                flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
 
             .case-img-placeholder {
-                width: 100%; /* 圖表容器寬度滿版 */
+                width: 100%;
                 height: 120px;
             }
         }
 
-        /* 針對超小螢幕手機（寬度小於 480px） */
         @media screen and (max-width: 480px) {
             header h1 {
                 font-size: 1.6rem;
@@ -359,14 +353,14 @@
             .toggle-btn {
                 padding: 10px 20px;
                 font-size: 0.95rem;
-                width: 100%; /* 按鈕在手機上改為滿版直列 */
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- 側邊欄：導航與團隊資訊[cite: 3] -->
+    <!-- 側邊欄：導航、團隊資訊與內嵌播放影片 -->
     <aside>
         <div class="meta-panel">
             <h3>專題團隊資訊</h3>
@@ -377,21 +371,25 @@
             </ul>
         </div>
 
+        <!-- 影片專欄內嵌播放區塊 -->
         <div class="video-box">
-            <h4>影片專欄導航</h4>
-            <a href="https://www.youtube.com/watch?v=IZlMuEshrDk&list=PL_nwzy0L5KTjo123n_kHLs43EiDX1bNM_" target="_blank" class="video-link-btn">開啟觀看專欄</a>
+            <h4>影片專欄播放</h4>
+            <div class="video-container">
+                <!-- 已將原始連結轉換成 YouTube 內嵌專用嵌入碼（Embed URL） -->
+                <iframe src="https://www.youtube.com/embed/IZlMuEshrDk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
         </div>
 
         <div class="meta-panel" style="margin-top: auto;">
             <h3>聯繫方式</h3>
             <ul class="meta-list">
                 <li>電話：<span>0976517599</span></li>
-                <li>學校：<span>勤益科技大學</span></li>
+                <li>地址：<span>勤益科技大學</span></li>
             </ul>
         </div>
     </aside>
 
-    <!-- 主要內容展示面板[cite: 3] -->
+    <!-- 主要內容展示面板 -->
     <main>
         <header>
             <h1>LOGISTICS PARADIGM SHIFT</h1>
@@ -403,13 +401,13 @@
             <p>在過去，物流是躲在幕後的「搬運工」，只要貨物準時抵達，工作就算完成[cite: 1, 3]。然而在 AI 技術爆發的今天，物流的角色早已躍升為企業的<span class="highlight">核心競爭力</span>[cite: 1, 3]。它不再只是後勤支援，而是品牌與客戶之間最真實、最感性的接觸點[cite: 1, 3]。AI 的價值在於消除等待的心理負擔，將冷冰冰的供應鏈轉化為溫暖的品牌承諾[cite: 1, 3]。</p>
         </div>
 
-        <!-- 視圖動態切換標籤[cite: 3] -->
+        <!-- 視圖動態切換標籤 -->
         <div class="toggle-container">
             <button class="toggle-btn active" onclick="toggleDashboard('ai-view')">AI 智慧物流行銷</button>
             <button class="toggle-btn" onclick="toggleDashboard('legacy-view')">傳統物流行銷</button>
         </div>
 
-        <!-- AI 時代數據面板[cite: 3] -->
+        <!-- AI 時代數據面板 -->
         <div id="ai-view" class="view-section active">
             <div class="grid-cards">
                 <div class="card">
@@ -431,7 +429,7 @@
             </div>
         </div>
 
-        <!-- 傳統物流數據面板[cite: 3] -->
+        <!-- 傳統物流數據面板 -->
         <div id="legacy-view" class="view-section">
             <div class="grid-cards">
                 <div class="card" style="border-color: rgba(157,0,255,0.2)">
@@ -453,7 +451,7 @@
             </div>
         </div>
 
-        <!-- 整合案例研究區塊[cite: 3] -->
+        <!-- 整合案例研究區塊 -->
         <div class="cases-section">
             <h2>// 實例動態分析 (CASE STUDIES)</h2>
             
@@ -475,19 +473,16 @@
         </div>
     </main>
 
-    <!-- 互動切換邏輯[cite: 3] -->
+    <!-- 互動切換邏輯 -->
     <script>
         function toggleDashboard(targetId) {
-            // 隱藏所有的內容面板
             document.querySelectorAll('.view-section').forEach(view => {
                 view.classList.remove('active');
             });
-            // 重設所有按鈕的啟用狀態
             document.querySelectorAll('.toggle-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
 
-            // 啟用當前點擊的面板與按鈕
             document.getElementById(targetId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
