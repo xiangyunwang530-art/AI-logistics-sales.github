@@ -18,6 +18,7 @@
             --grid-color: rgba(255, 0, 127, 0.05);
         }
 
+        /* 移除多餘的外邊距與內邊距，防止頂部和兩側產生黑邊或空白處 */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -33,13 +34,13 @@
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 25px 25px;
             display: flex;
-            flex-direction: row; /* 預設桌面大螢幕為左右彈性排列 */
+            flex-direction: row; /* B2B 桌面佈局：左右彈性排列 */
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         /* ==========================================================================
-           側邊欄導航（Flexbox 彈性佈局 + 大螢幕固定）
+           側邊欄導航系統（Flexbox 架構、完美置頂不留白）
            ========================================================================== */
         aside {
             width: 340px;
@@ -51,6 +52,8 @@
             gap: 25px;
             box-shadow: 5px 0 25px rgba(255, 0, 127, 0.15);
             position: fixed;
+            top: 0; /* 鎖定在視窗最上方，絕不產生空白 */
+            left: 0;
             height: 100vh;
             overflow-y: auto;
             z-index: 100;
@@ -108,7 +111,7 @@
         .video-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 確保 16:9 影片比例 */
+            padding-bottom: 56.25%; /* 標準 16:9 比例 */
             height: 0;
             overflow: hidden;
             border: 1px solid var(--neon-purple);
@@ -125,10 +128,10 @@
         }
 
         /* ==========================================================================
-           主要內容區域（彈性寬度配合）
+           主要報告內文區塊（大螢幕與 RWD 彈性伸縮）
            ========================================================================== */
         main {
-            margin-left: 340px; /* 大螢幕留出左邊欄固定寬度 */
+            margin-left: 340px; /* 保留給固定側邊欄的寬度 */
             flex: 1;
             padding: 40px;
             max-width: 1200px;
@@ -178,7 +181,7 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 40px;
-            flex-wrap: wrap; /* 寬度不夠時按鈕自動換行 */
+            flex-wrap: wrap; /* 寬度不夠時按鈕自動向下流動換行 */
         }
 
         .toggle-btn {
@@ -201,7 +204,7 @@
         }
 
         /* ==========================================================================
-           核心數據網格（CSS Grid 彈性佈局）
+           數據展示看板（CSS Grid 自動網格排版）
            ========================================================================== */
         .view-section {
             display: none;
@@ -219,7 +222,7 @@
 
         .grid-cards {
             display: grid;
-            /* 運用 grid 彈性自動填滿 (auto-fit)，卡片寬度在 260px 到 1fr 之間自動縮放縮減欄數 */
+            /* 自動填滿 (auto-fit)，卡片在最小 260px 到最大 1fr 之間彈性調整欄數 */
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
@@ -256,7 +259,7 @@
             font-weight: bold;
         }
 
-        /* 案例分析排版（Flexbox 彈性排列） */
+        /* 案例研究區域（Flexbox 平行與垂直適應） */
         .cases-section {
             background: rgba(26, 8, 38, 0.8);
             border: 1px solid var(--neon-purple);
@@ -274,7 +277,7 @@
 
         .case-block {
             display: flex;
-            flex-direction: row; /* 大螢幕左右橫排 */
+            flex-direction: row; /* 大螢幕下圖片與文字並排 */
             gap: 30px;
             margin-bottom: 30px;
             padding-bottom: 30px;
@@ -315,46 +318,47 @@
         }
 
         /* ==========================================================================
-           RWD 響應式媒體查詢 (Media Queries)[cite: 3]
+           RWD 響應式佈局切換機制 (Media Queries)[cite: 3]
            ========================================================================== */
         
-        /* 當螢幕寬度小於 1024px（如中小型筆電、平版、手機）*/
+        /* 平板、小筆電環境 (螢幕寬度小於 1024px) */
         @media screen and (max-width: 1024px) {
             body {
-                flex-direction: column; /* 整頁面改為垂直上下排列 */
+                flex-direction: column; /* 整個版面自動切換為垂直堆疊 */
             }
 
             aside {
-                position: relative; /* 取消左側固定定位 */
-                width: 100%; /* 寬度改為自動滿版 */
-                height: auto; /* 高度隨內容彈性伸展 */
+                position: relative; /* 解除左側固定狀態 */
+                width: 100%; /* 寬度自動滿版 */
+                height: auto; /* 高度隨內嵌影片與文字彈性撐開 */
                 border-right: none;
                 border-bottom: 2px solid var(--neon-magenta);
                 box-shadow: 0 5px 25px rgba(255, 0, 127, 0.15);
+                top: auto;
             }
 
             main {
-                margin-left: 0; /* 消除大螢幕的左邊距 */
+                margin-left: 0; /* 移除桌面端的左方間距 */
                 padding: 30px 20px;
             }
 
             header h1 {
-                font-size: 2rem; /* 調小標題字體以防溢出 */
+                font-size: 2rem;
             }
 
             .case-block {
-                flex-direction: column; /* 案例分析區塊改為垂直堆疊 */
+                flex-direction: column; /* 案例分析區改為上下排列 */
                 align-items: flex-start;
                 gap: 15px;
             }
 
             .case-img-placeholder {
-                width: 100%; /* 圖表容器寬度自動填滿 */
-                height: 150px;
+                width: 100%; /* 圖片容器在平版/手機上自動寬度滿版 */
+                height: 160px;
             }
         }
 
-        /* 針對小螢幕智慧型手機（寬度小於 480px）*/
+        /* 智慧型手機環境 (螢幕寬度小於 480px) */
         @media screen and (max-width: 480px) {
             header h1 {
                 font-size: 1.6rem;
@@ -362,7 +366,7 @@
             .toggle-btn {
                 padding: 10px 20px;
                 font-size: 0.95rem;
-                width: 100%; /* 按鈕在手機畫面上滿版直列 */
+                width: 100%; /* 控制按鈕自動垂直全滿，便於手機點擊 */
             }
             .cases-section {
                 padding: 15px;
@@ -402,7 +406,7 @@
     <!-- 主要內容展示面板[cite: 3] -->
     <main>
         <header>
-            <h1>LOGISTICS PARADIGM SHIFT</h1>
+            <h1>物流範式轉移</h1>
             <div class="subtitle">AI-POWERED VS LEGACY MARKETING // REPORT</div>
         </header>
 
