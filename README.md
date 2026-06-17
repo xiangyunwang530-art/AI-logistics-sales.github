@@ -33,11 +33,12 @@
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 25px 25px;
             display: flex;
+            flex-direction: row; /* 預設大螢幕為左右並排 */
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* 側邊欄導航樣式 */
+        /* 側邊欄導航樣式（大螢幕固定在左側） */
         aside {
             width: 320px;
             background: rgba(26, 8, 38, 0.95);
@@ -51,6 +52,7 @@
             height: 100vh;
             overflow-y: auto;
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .meta-panel {
@@ -123,10 +125,12 @@
 
         /* 主要內容區域 */
         main {
-            margin-left: 320px;
+            margin-left: 320px; /* 為了留出左側固定側邊欄的空間 */
             flex: 1;
             padding: 40px;
             max-width: 1200px;
+            width: 100%;
+            transition: margin-left 0.3s ease;
         }
 
         header {
@@ -173,6 +177,7 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 40px;
+            flex-wrap: wrap; /* 避免按鈕在小螢幕擠壓變形 */
         }
 
         .toggle-btn {
@@ -211,6 +216,7 @@
 
         .grid-cards {
             display: grid;
+            /* 使用 auto-fit 自動根據可用寬度調整欄數，最少 260px 一欄 */
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
@@ -265,10 +271,12 @@
 
         .case-block {
             display: flex;
+            flex-direction: row; /* 預設左右並排 */
             gap: 30px;
             margin-bottom: 30px;
             padding-bottom: 30px;
             border-bottom: 1px dashed rgba(157, 0, 255, 0.2);
+            align-items: center;
         }
 
         .case-block:last-child {
@@ -302,10 +310,63 @@
             color: var(--text-dim);
             font-size: 0.95rem;
         }
+
+        /* ==========================================================================
+           響應式網頁設計 (RWD) 媒體查詢
+           ========================================================================== */
+        
+        /* 當螢幕寬度小於 992px（如平板、小筆電或手機）時優化佈局 */
+        @media screen and (max-width: 992px) {
+            body {
+                flex-direction: column; /* 改為上下垂直排列 */
+            }
+
+            aside {
+                position: relative; /* 取消固定定位 */
+                width: 100%; /* 寬度滿版 */
+                height: auto; /* 高度自動 */
+                border-right: none;
+                border-bottom: 2px solid var(--neon-magenta);
+                box-shadow: 0 5px 25px rgba(255, 0, 127, 0.15);
+            }
+
+            main {
+                margin-left: 0; /* 清空主畫面左邊距，填滿寬度 */
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 2rem; /* 主標題字體縮小 */
+            }
+
+            .case-block {
+                flex-direction: column; /* 實例區改為上下排列 */
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .case-img-placeholder {
+                width: 100%; /* 圖表容器寬度滿版 */
+                height: 120px;
+            }
+        }
+
+        /* 針對超小螢幕手機（寬度小於 480px） */
+        @media screen and (max-width: 480px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+            .toggle-btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+                width: 100%; /* 按鈕在手機上改為滿版直列 */
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- 側邊欄：導航與團隊資訊[cite: 3] -->
     <aside>
         <div class="meta-panel">
             <h3>專題團隊資訊</h3>
@@ -330,6 +391,7 @@
         </div>
     </aside>
 
+    <!-- 主要內容展示面板[cite: 3] -->
     <main>
         <header>
             <h1>LOGISTICS PARADIGM SHIFT</h1>
@@ -338,56 +400,60 @@
 
         <div class="intro-panel">
             <h2>// 核心思維：物流即行銷，供應鏈即體驗</h2>
-            <p>在過去，物流是躲在幕後的「搬運工」，只要貨物準時抵達，工作就算完成。然而在 AI 技術爆發的今天，物流的角色早已躍升為企業的<span class="highlight">核心競爭力</span>。它不再只是後勤支援，而是品牌與客戶之間最真實、最感性的接觸點。AI 的價值在於消除等待的心理負擔，將冷冰冰的供應鏈轉化為溫暖的品牌承諾。</p>
+            <p>在過去，物流是躲在幕後的「搬運工」，只要貨物準時抵達，工作就算完成[cite: 1, 3]。然而在 AI 技術爆發的今天，物流的角色早已躍升為企業的<span class="highlight">核心競爭力</span>[cite: 1, 3]。它不再只是後勤支援，而是品牌與客戶之間最真實、最感性的接觸點[cite: 1, 3]。AI 的價值在於消除等待的心理負擔，將冷冰冰的供應鏈轉化為溫暖的品牌承諾[cite: 1, 3]。</p>
         </div>
 
+        <!-- 視圖動態切換標籤[cite: 3] -->
         <div class="toggle-container">
             <button class="toggle-btn active" onclick="toggleDashboard('ai-view')">AI 智慧物流行銷</button>
             <button class="toggle-btn" onclick="toggleDashboard('legacy-view')">傳統物流行銷</button>
         </div>
 
+        <!-- AI 時代數據面板[cite: 3] -->
         <div id="ai-view" class="view-section active">
             <div class="grid-cards">
                 <div class="card">
                     <h3>核心賣點 (Value)</h3>
-                    <p>強調<span class="highlight">「彈性預測、動態履約、綠色溢價」</span>。著重於系統抵抗不確定性的能力與黑天鵝免疫力。</p>
+                    <p>強調<span class="highlight">「彈性預測、動態履約、綠色溢價」</span>[cite: 1, 3]。著重於系統抵抗不確定性的能力與黑天鵝免疫力[cite: 1, 3]。</p>
                 </div>
                 <div class="card">
                     <h3>數據角色 (Data)</h3>
-                    <p>運用<span class="highlight">「需求感測（Demand Sensing）」</span>化為行銷武器，主動告知客戶如何避開即時港口延誤與氣候風險。</p>
+                    <p>運用<span class="highlight">「需求感測（Demand Sensing）」</span>化為行銷武器，主動告知客戶如何避開即時港口延誤與氣候風險[cite: 1, 3]。</p>
                 </div>
                 <div class="card">
                     <h3>客戶體驗 (CX)</h3>
-                    <p>藉由 <span class="highlight">AI Agent 智能共感</span>即時摘要關務與異常警示，在貨主提問、產生等待焦慮前即主動給予解決方案。</p>
+                    <p>藉由 <span class="highlight">AI Agent 智能共感</span>即時摘要關務與異常警示，在貨主提問、產生等待焦慮前即主動給予解決方案[cite: 1, 3]。</p>
                 </div>
                 <div class="card">
                     <h3>品牌永續 (ESG)</h3>
-                    <p>將 AI 即時路徑優化轉為<span class="highlight">「範疇三減碳數據」</span>儀表板，直接助客戶滿足國際關稅與綠色鏈要求。</p>
+                    <p>將 AI 即時路徑優化轉為<span class="highlight">「範疇三減碳數據」</span>儀表板，直接助客戶滿足國際關稅與綠色鏈要求[cite: 1, 3]。</p>
                 </div>
             </div>
         </div>
 
+        <!-- 傳統物流數據面板[cite: 3] -->
         <div id="legacy-view" class="view-section">
             <div class="grid-cards">
                 <div class="card" style="border-color: rgba(157,0,255,0.2)">
                     <h3>核心賣點 (Value)</h3>
-                    <p>強調「準時、安全、便宜」。著重於車隊、倉庫面積等實體資產與標準 SLA 的被動推銷。</p>
+                    <p>強調「準時、安全、便宜」[cite: 1, 3]。著重於車隊、倉庫面積等實體資產與標準 SLA 的被動推銷[cite: 1, 3]。</p>
                 </div>
                 <div class="card" style="border-color: rgba(157,0,255,0.2)">
                     <h3>數據角色 (Data)</h3>
-                    <p>屬於「後驗式歷史報告」。行銷素材多為過去到貨率、年度營收等落後指標，手段單向被動。</p>
+                    <p>屬於「後驗式歷史報告」[cite: 1, 3]。行銷素材多為過去到貨率、年度營收等落後指標，手段單向被動[cite: 1, 3]。</p>
                 </div>
                 <div class="card" style="border-color: rgba(157,0,255,0.2)">
                     <h3>客戶體驗 (CX)</h3>
-                    <p>僅提供單向查單編號（Tracking ID）。缺乏同理心，多屬於客戶有問、物流才答的被動告知機制。</p>
+                    <p>僅提供單向查單編號（Tracking ID）[cite: 1, 3]。缺乏同理心，多屬於客戶有問、物流才答的被動告知機制[cite: 1, 3]。</p>
                 </div>
                 <div class="card" style="border-color: rgba(157,0,255,0.2)">
                     <h3>品牌永續 (ESG)</h3>
-                    <p>流於「口號式 CSR」。停留在改用電子發票、配合種樹等缺乏數據支持的表面綠化（Greenwashing）。</p>
+                    <p>流於「口號式 CSR」[cite: 1, 3]。停留在改用電子發票、配合種樹等缺乏數據支持的表面綠化（Greenwashing）[cite: 1, 3]。</p>
                 </div>
             </div>
         </div>
 
+        <!-- 整合案例研究區塊[cite: 3] -->
         <div class="cases-section">
             <h2>// 實例動態分析 (CASE STUDIES)</h2>
             
@@ -395,7 +461,7 @@
                 <div class="case-img-placeholder">[ AMAZON AI DIAGRAM ]</div>
                 <div class="case-text">
                     <h3>亞馬遜 (Amazon) — 預測式發貨 (Anticipatory Shipping)</h3>
-                    <p>運用 AI 專利算法分析使用者的瀏覽紀錄、購物車與停留時間。在消費者點擊購買前，系統便提前將商品運往距離該市場最近的衛星倉儲。這種極致的速度創造了傳統行銷無法比擬的「品牌驚艷體驗」。</p>
+                    <p>運用 AI 專利算法分析使用者的瀏覽紀錄、購物車與停留時間[cite: 1, 3]。在消費者點擊購買前，系統便提前將商品運往距離該市場最近的衛星倉儲[cite: 1, 3]。這種極致的速度創造了傳統行銷無法比擬的「品牌驚艷體驗」[cite: 1, 3]。</p>
                 </div>
             </div>
 
@@ -403,12 +469,13 @@
                 <div class="case-img-placeholder">[ PX MART INTELLIGENT ]</div>
                 <div class="case-text">
                     <h3>全聯福利中心 — 智慧補貨與動態履約</h3>
-                    <p>引進自動化物流中心並與氣象、歷史大數據連動，在颱風或大節慶來臨前透過 AI 需求感測提早調配車隊與路線。當消費者在關鍵時刻看到滿滿的生鮮貨架，便在心中建立起極高的品牌信賴與依賴感。</p>
+                    <p>引進自動化物流中心並與氣象、歷史大數據連動，在颱風或大節慶來臨前透過 AI 需求感測提早調配車隊與路線[cite: 1, 3]。當消費者在關鍵時刻看到滿滿的生鮮貨架，便在心中建立起極高的品牌信賴與依賴感[cite: 1, 3]。</p>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- 互動切換邏輯[cite: 3] -->
     <script>
         function toggleDashboard(targetId) {
             // 隱藏所有的內容面板
