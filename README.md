@@ -446,4 +446,53 @@
                     <p>強調「準時、安全、便宜」。著重於車隊、倉庫面積等實體資產與標準 SLA 的被動推銷。</p>
                 </div>
                 <div class="card" style="border-color: rgba(157,0,255,0.2)">
-                    <h3>數據角色 (Data
+                    <h3>數據角色 (Data)</h3>
+                    <p>屬於「後驗式歷史報告」。行銷素材多為過去到貨率、年度營收等落後指標，手段單向被動。</p>
+                </div>
+                <div class="card" style="border-color: rgba(157,0,255,0.2)">
+                    <h3>客戶體驗 (CX)</h3>
+                    <p>僅提供單向查單編號（Tracking ID）。缺乏同理心，多屬於客戶有問、物流才答的被動告知機制。</p>
+                </div>
+                <div class="card" style="border-color: rgba(157,0,255,0.2)">
+                    <h3>品牌永續 (ESG)</h3>
+                    <p>流於「口號式 CSR」。停留在改用電子發票、配合種樹等缺乏數據支持的表面綠化（Greenwashing）。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cases-section">
+            <h2>// 實例動態分析 (CASE STUDIES)</h2>
+            
+            <div class="case-block">
+                <div class="case-img-placeholder">[ AMAZON AI DIAGRAM ]</div>
+                <div class="case-text">
+                    <h3>亞馬遜 (Amazon) — 預測式發貨 (Anticipatory Shipping)</h3>
+                    <p>運用 AI 專利算法分析使用者的瀏覽紀錄、購物車與停留時間。在消費者點擊購買前，系統便提前將商品运往距離該市場最近的衛星倉儲。這種極致的速度創造了傳統行銷無法比擬的「品牌驚艷體驗」。</p>
+                </div>
+            </div>
+
+            <div class="case-block">
+                <div class="case-img-placeholder">[ PX MART INTELLIGENT ]</div>
+                <div class="case-text">
+                    <h3>全聯福利中心 — 智慧補貨與動態履約</h3>
+                    <p>引進自動化物流中心並與氣象、歷史大數據連動，在颱風或大節慶來臨前透過 AI 需求感測提早調配車隊與路線。當消費者在關鍵時刻看到滿滿的生鮮貨架，便在心中建立起極高的品牌信賴與依賴感。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleDashboard(targetId) {
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(targetId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
