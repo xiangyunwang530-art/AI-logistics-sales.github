@@ -19,8 +19,8 @@
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <script type="module" crossorigin src="/assets/index-Dc7_khpJ.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-yRK8of-J.css">
+    <script type="module" crossorigin src="/assets/index-CpPiXQPK.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BQGQB5c6.css">
     <script src="/__manus__/debug-collector.js" defer></script>
   </head>
 
