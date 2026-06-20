@@ -1,68 +1,33 @@
-import { useEffect, useState } from 'react';
-import Sidebar from '@/components/Sidebar';
-import {
-  Slide1,
-  Slide2,
-  Slide3,
-  Slide4,
-  Slide5,
-  Slide6,
-  Slide7,
-  Slide8,
-  Slide9,
-  Slide10,
-  RecommendedVideos,
-  PPTPresentation,
-} from '@/components/Slides';
+<!doctype html>
+<html lang="zh-TW">
 
-export default function Home() {
-  const [activeSection, setActiveSection] = useState('slide1');
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>AI 時代物流行銷典範轉移報告</title>
+    <meta name="description" content="探索 AI 時代物流行銷的典範轉移，從傳統資產競爭到預測能力與品牌體驗的革命。" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23050505' width='100' height='100'/><text x='50' y='75' font-size='60' font-family='Orbitron' fill='%2300F0FF' text-anchor='middle'>AI</text></svg>" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  </head>
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('[id^="slide"]');
-      let current = 'slide1';
+  <body class="dark">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script
+      defer
+      src="%VITE_ANALYTICS_ENDPOINT%/umami"
+      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+  </body>
 
-      sections.forEach((section) => {
-        const sectionTop = section.getBoundingClientRect().top;
-        if (sectionTop <= window.innerHeight / 2) {
-          current = section.getAttribute('id') || 'slide1';
-        }
-      });
-
-      setActiveSection(current);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleNavigate = (sectionId: string) => {
-    setActiveSection(sectionId);
-  };
-
-  return (
-    <div className="flex min-h-screen bg-bg-dark">
-      {/* Left Sidebar Navigation */}
-      <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />
-
-      {/* Main Content */}
-      <main className="ml-80 flex-1 flex flex-col">
-        <Slide1 />
-        <Slide2 />
-        <Slide3 />
-        <Slide4 />
-        <Slide5 />
-        <Slide6 />
-        <Slide7 />
-        <Slide8 />
-        <Slide9 />
-        <Slide10 />
-        <RecommendedVideos />
-        <PPTPresentation />
-      </main>
-
-
-    </div>
-  );
-}
+</html>
